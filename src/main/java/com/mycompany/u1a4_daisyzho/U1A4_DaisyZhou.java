@@ -243,96 +243,94 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
 
     private void studentAverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentAverageActionPerformed
         // TODO add your handling code here:
-        String checkFirstName = firstName.getText(), checkLastName = lastName.getText(), testOneInput = testOne.getText(), testTwoInput = testTwo.getText(), testThreeInput = testThree.getText(), testFourInput = testFour.getText();
+        double total = 0;
+        String checkFirstName = firstName.getText(), checkLastName = lastName.getText();
         boolean kidInArray = false;    
-        for (int j = 0; j <= studentInfo.length; j++) {
-            if (checkFirstName.equals(studentInfo[j])){ //Array.equals??
-                for (int k = 1; k < 2; k++){ //atp the for loop is just for fun...
-                    if (checkLastName.equals(studentInfo[j][k])){
+        for (int j = 0; j <= counter; j++) {
+            if (checkFirstName.equals(studentInfo[j][0])){ //once you find j stop
+                    if (checkLastName.equals(studentInfo[j][1])){
+                        break; //check placement
                         kidInArray = true;
-                        double testNoOne = Double.parseDouble(testOneInput); 
-                        double testNoTwo = Double.parseDouble(testTwoInput); //maybe not in the for loop even though it isn't really a loop...
-                        double testNoThree = Double.parseDouble(testThreeInput);
-                        double testNoFour = Double.parseDouble(testFourInput);
-                        double average = Math.round((testNoOne + testNoTwo + testNoThree + testNoFour)/4); //WHY ARE YOU NEVER REEEEAAAADDDDDDD
+                        for (int k = 2; k < 6; k++){
+                            double doub = Double.parseDouble(studentInfo[j][k]);
+                            total += doub; //how to make j stop--break?
+                        }
+                        double average = Math.round((total/4)*100.0/100.0); //WHY ARE YOU NEVER REEEEAAAADDDDDDD
                         message.setText(checkFirstName + " " + checkLastName + "'s average is " + average);
-                        break;
+                        //break;
                     }
-                }
             }
         }
         if (!kidInArray) {
-            message.setText(checkFirstName + " " + checkLastName + " is not in the array. Make sure you have spelt their name correctly and check they are in the array by pressing the list button."); //I sure hope it prints on two lines...
+            message.setText(checkFirstName + " " + checkLastName + " is not in the array. Make sure you have spelt their name correctly \nand check they are in the array by pressing the list button."); //I sure hope it prints on two lines...
         }
     }//GEN-LAST:event_studentAverageActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
         String firstNameInput = firstName.getText(), lastNameInput = lastName.getText(), testOneInput = testOne.getText(), testTwoInput = testTwo.getText(), testThreeInput = testThree.getText(), testFourInput = testFour.getText();
-
+        
         if(firstNameInput.equals("")) { 
             message.setText("Please enter in your first name.");
             return; 
         }
-        
         if(lastNameInput.equals("")) {
             message.setText("Please enter in your last name.");
             return; 
         }
-        
         if(testOneInput.equals("")) {
             message.setText("Please input your mark for test one.");
             return;
         }
-        
         if(testTwoInput.equals("")) {
             message.setText("Please input your mark for test two.");
             return;
         }
-        
         if(testThreeInput.equals("")) {
             message.setText("Please input your mark for test three.");
             return;
         }
-        
         if(testFourInput.equals("")) {
-            message.setText("Please input your mark for test four."); //make sure no duplicate names too
+            message.setText("Please input your mark for test four."); 
             return; //why is this unnecessary???
-        }
-//maybe use a try catch in this
+        } 
            try {
-            double testNoOne = Double.parseDouble(testOneInput); //why is it never read
+            double testNoOne = Double.parseDouble(testOneInput); //why is it never read maybe bc it's never used
             double testNoTwo = Double.parseDouble(testTwoInput);
             double testNoThree = Double.parseDouble(testThreeInput);
             double testNoFour = Double.parseDouble(testFourInput);
-            //if (testNoOne) 
-            for (int row = 0; row < studentInfo.length; row++){
-                for (int col = 0; col < 6; col++) {
-                    if (col == 0){
-                        studentInfo[row][0] = firstNameInput;
-                    } else if (col == 1) {
-                        studentInfo[row][1] = lastNameInput;
-                    } else if (col == 2) {
-                        studentInfo[row][2] = testOneInput;
-                    } else if (col == 3) {
-                        studentInfo[row][3] = testTwoInput;
-                    } else if (col == 4) {
-                        studentInfo[row][4] = testThreeInput;
-                    } else if (col == 5) {
-                        studentInfo[row][5] = testFourInput;
-                    }
+            for (int l = 0; l <= counter; l++) {
+                if (firstNameInput.equals(studentInfo[l][0]) && lastNameInput.equals(studentInfo[l][1])) {
+                   message.setText("There is already a student with that name in the list. "); 
+                   return;
                 }
-                output.setText("\n");
-                counter++;
             }
+                for (int row = 0; row <= counter; row++){
+                    for (int col = 0; col < 6; col++) {
+                        if (col == 0){
+                            studentInfo[row][0] = firstNameInput;
+                        } else if (col == 1) {
+                            studentInfo[row][1] = lastNameInput;
+                        } else if (col == 2) {
+                            studentInfo[row][2] = testOneInput; //incompatible types ;(
+                        } else if (col == 3) {
+                            studentInfo[row][3] = testTwoInput;
+                        } else if (col == 4) {
+                            studentInfo[row][4] = testThreeInput;
+                        } else if (col == 5) {
+                            studentInfo[row][5] = testFourInput;
+                        }
+                    }
+                    output.setText("\n");
+                    counter++;
+                }
             if (counter == 30) {
              message.setText("You have already entered information for your thirtieth student. You may not enter anymore information");
              return;
-         }
+            }
            } catch (NumberFormatException e ) { 
                message.setText("Please ensure that the numbers you have entered for your test scores are numbers.");
            }
-        }
     }//GEN-LAST:event_addActionPerformed
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
@@ -342,9 +340,11 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
                 System.out.println(column);
             }*/
         output.setText("");
-        for (int row1 = 0; row1 < studentInfo.length; row1++) { //does the 1 matter since it was in a private void?
-            for (int col1 = 0; col1 < 6; col1++) {
-                output.setText(nothing + studentInfo[row1][col1] + " "); //enhanced for loop as in for each?
+        for (int row1 = 0; row1 <= counter; row1++) { //does the 1 matter since it was in a private void?
+            for (int col1 = 0; col1 < 6; col1++) { //maybe change to strings so it can acc print out student names
+                if (studentInfo[row1] != null && [col1] != null) { //does this even work???
+                output.setText(nothing + studentInfo[row1][col1] + " ");
+                }
             }
             output.setText("\n");
         }
@@ -352,11 +352,16 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
 
     private void classAverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classAverageActionPerformed
         // TODO add your handling code here:
-        for (int p = 0; p <= studentInfo.length; p++){
-            for (int h = 2; h < 6; h++) { //multiply counter by 4 to know what to divide by
-                double grade = Double.parseDouble(testOne.getText()); //think of this later
+        int noOfMarks = 0;
+        for (int p = 0; p <= counter; p++){
+            for (int h = 2; h < 6; h++) { 
+                double mark = Double.parseDouble(studentInfo[p][h]);
+                double totalClass += mark;
+                noOfMarks++; //or multiply counter by 4 to know what to divide by
             }
         }
+        double classAverage = Math.round((totalClass/noOfMarks)*100.0/100.0);
+        message.setText("The course average is " + classAverage);
     }//GEN-LAST:event_classAverageActionPerformed
 
     /**
