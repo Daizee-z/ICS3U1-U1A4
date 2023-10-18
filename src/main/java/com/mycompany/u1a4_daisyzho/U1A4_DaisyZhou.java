@@ -10,7 +10,6 @@ package com.mycompany.u1a4_daisyzho;
  */
 public class U1A4_DaisyZhou extends javax.swing.JFrame {
     String [][] studentInfo = new String [30][6];
-    String nothing = "";
     int counter = 0;
     
     /**
@@ -49,7 +48,8 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
         list = new javax.swing.JButton();
         studentAverage = new javax.swing.JButton();
         classAverage = new javax.swing.JButton();
-        message = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        message = new javax.swing.JTextArea();
 
         jTextField2.setText("jTextField2");
 
@@ -122,7 +122,9 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
             }
         });
 
-        message.setEditable(false);
+        message.setColumns(20);
+        message.setRows(5);
+        jScrollPane2.setViewportView(message);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -161,7 +163,7 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
                                 .addComponent(add)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(list)))))
-                .addGap(41, 41, 41)
+                .addGap(38, 38, 38)
                 .addComponent(studentAverage)
                 .addGap(37, 37, 37)
                 .addComponent(classAverage)
@@ -172,8 +174,12 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(276, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -221,8 +227,8 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
                         .addComponent(classAverage))
                     .addComponent(list))
                 .addGap(18, 18, 18)
-                .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(90, 90, 90)
@@ -243,17 +249,17 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
 
     private void studentAverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentAverageActionPerformed
         // TODO add your handling code here:
-        double total = 0;
+         double total = 0;
         String checkFirstName = firstName.getText(), checkLastName = lastName.getText();
         boolean kidInArray = false;    
-        for (int j = 0; j <= counter; j++) {
-            if (checkFirstName.equals(studentInfo[j][0])){ //once you find j stop
-                    if (checkLastName.equals(studentInfo[j][1])){
-                        break; //check placement
+        for (int j = 0; j < counter; j++) {
+            if (checkFirstName.equalsIgnoreCase(studentInfo[j][0])){ //once you find j stop
+                    if (checkLastName.equalsIgnoreCase(studentInfo[j][1])){
                         kidInArray = true;
                         for (int k = 2; k < 6; k++){
                             double doub = Double.parseDouble(studentInfo[j][k]);
                             total += doub; //how to make j stop--break?
+                            break;
                         }
                         double average = Math.round((total/4)*100.0/100.0); //WHY ARE YOU NEVER REEEEAAAADDDDDDD
                         message.setText(checkFirstName + " " + checkLastName + "'s average is " + average);
@@ -268,100 +274,104 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         // TODO add your handling code here:
+         // TODO add your handling code here:
         String firstNameInput = firstName.getText(), lastNameInput = lastName.getText(), testOneInput = testOne.getText(), testTwoInput = testTwo.getText(), testThreeInput = testThree.getText(), testFourInput = testFour.getText();
+       
+        if(firstNameInput.equals("")) {
+            message.setText("Please enter the first name.");
+            return;
+        }
         
-        if(firstNameInput.equals("")) { 
-            message.setText("Please enter in your first name.");
-            return; 
-        }
         if(lastNameInput.equals("")) {
-            message.setText("Please enter in your last name.");
-            return; 
+            message.setText("Please enter the last name.");
+            return;
         }
+        
         if(testOneInput.equals("")) {
-            message.setText("Please input your mark for test one.");
+            message.setText("Please input the mark for test one.");
             return;
         }
+        
         if(testTwoInput.equals("")) {
-            message.setText("Please input your mark for test two.");
+            message.setText("Please input the mark for test two.");
             return;
         }
+        
         if(testThreeInput.equals("")) {
-            message.setText("Please input your mark for test three.");
+            message.setText("Please input the mark for test three.");
             return;
         }
+        
         if(testFourInput.equals("")) {
-            message.setText("Please input your mark for test four."); 
+            message.setText("Please input the mark for test four.");
             return; //why is this unnecessary???
-        } 
-           try {
-            double testNoOne = Double.parseDouble(testOneInput); //why is it never read maybe bc it's never used
-            double testNoTwo = Double.parseDouble(testTwoInput);
-            double testNoThree = Double.parseDouble(testThreeInput);
-            double testNoFour = Double.parseDouble(testFourInput);
-            for (int l = 0; l <= counter; l++) {
-                if (firstNameInput.equals(studentInfo[l][0]) && lastNameInput.equals(studentInfo[l][1])) {
-                   message.setText("There is already a student with that name in the list. "); 
-                   return;
-                }
-            }
-                for (int row = 0; row <= counter; row++){
-                    for (int col = 0; col < 6; col++) {
-                        if (col == 0){
-                            studentInfo[row][0] = firstNameInput;
-                        } else if (col == 1) {
-                            studentInfo[row][1] = lastNameInput;
-                        } else if (col == 2) {
-                            studentInfo[row][2] = testOneInput; //incompatible types ;(
-                        } else if (col == 3) {
-                            studentInfo[row][3] = testTwoInput;
-                        } else if (col == 4) {
-                            studentInfo[row][4] = testThreeInput;
-                        } else if (col == 5) {
-                            studentInfo[row][5] = testFourInput;
-                        }
-                    }
-                    output.setText("\n");
-                    counter++;
-                }
-            if (counter == 30) {
+        }
+       
+        if (counter == 30) { 
              message.setText("You have already entered information for your thirtieth student. You may not enter anymore information");
              return;
             }
-           } catch (NumberFormatException e ) { 
+
+            try {
+                double testNoOne = Double.parseDouble(testOneInput); //why is it never read maybe bc it's never used
+                double testNoTwo = Double.parseDouble(testTwoInput);
+                double testNoThree = Double.parseDouble(testThreeInput);
+                double testNoFour = Double.parseDouble(testFourInput);
+                if (testNoOne > 100 || testNoOne < 0 || testNoTwo > 100 || testNoTwo < 0 || testNoThree > 100 || testNoThree < 0 || testNoFour > 100 || testNoFour < 0) {
+                    message.setText ("Please enter a valid grade (between 0 and 100). Note that no bonus marks are given.");
+                    return;
+                }
+                for (int l = 0; l <= counter; l++) {
+                    if (firstNameInput.equals(studentInfo[l][0]) && lastNameInput.equals(studentInfo[l][1])) {
+                       message.setText("There is already a student with that name in the list. ");
+                       return;
+                    }
+                }
+
+
+                                    studentInfo[counter][0] = firstNameInput;
+
+                                    studentInfo[counter][1] = lastNameInput;
+
+                                    studentInfo[counter][2] = testOneInput;
+
+                                    studentInfo[counter][3] = testTwoInput;
+
+                                    studentInfo[counter][4] = testThreeInput;
+
+                                    studentInfo[counter][5] = testFourInput;
+
+                        output.setText("\n");
+                        counter++;
+
+            } catch (NumberFormatException e ) {
                message.setText("Please ensure that the numbers you have entered for your test scores are numbers.");
            }
     }//GEN-LAST:event_addActionPerformed
 
     private void listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listActionPerformed
         // TODO add your handling code here:
-        /*for (String[] row1 : studentInfo) {
-            for (String column : row1){
-                System.out.println(column);
-            }*/
+        String totalOutput = "";
         output.setText("");
-        for (int row1 = 0; row1 <= counter; row1++) { //does the 1 matter since it was in a private void?
-            for (int col1 = 0; col1 < 6; col1++) { //maybe change to strings so it can acc print out student names
-                if (studentInfo[row1] != null && [col1] != null) { //does this even work???
-                output.setText(nothing + studentInfo[row1][col1] + " ");
-                }
-            }
+        for (int row = 0; row <= counter; row++) {
+            totalOutput += studentInfo[row][0] + " " + studentInfo[row][1] + " - Test 1: " + studentInfo[row][2] + "%, Test 2: " + studentInfo[row][3] +  "%, Test 3: " + studentInfo[row][4] + "%, Test 4 : " + studentInfo[row][5];
             output.setText("\n");
         }
     }//GEN-LAST:event_listActionPerformed
 
     private void classAverageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classAverageActionPerformed
         // TODO add your handling code here:
+        double totalClass = 0;
         int noOfMarks = 0;
         for (int p = 0; p <= counter; p++){
             for (int h = 2; h < 6; h++) { 
                 double mark = Double.parseDouble(studentInfo[p][h]);
-                double totalClass += mark;
-                noOfMarks++; //or multiply counter by 4 to know what to divide by
+                totalClass += mark;
+                noOfMarks++; 
             }
         }
-        double classAverage = Math.round((totalClass/noOfMarks)*100.0/100.0);
-        message.setText("The course average is " + classAverage);
+        double classAverageMark = Math.round((totalClass/noOfMarks)*100.0/100.0);
+        message.setText("The course average is " + classAverageMark);
     }//GEN-LAST:event_classAverageActionPerformed
 
     /**
@@ -418,11 +428,12 @@ public class U1A4_DaisyZhou extends javax.swing.JFrame {
     private javax.swing.JTextField firstName;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField lastName;
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JButton list;
-    private javax.swing.JTextField message;
+    private javax.swing.JTextArea message;
     private javax.swing.JTextArea output;
     private javax.swing.JButton studentAverage;
     private javax.swing.JLabel studentGrades;
